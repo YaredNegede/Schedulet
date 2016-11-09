@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+						http://www.springframework.org/schema/util 
+						http://www.springframework.org/schema/util/spring-util-4.2.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+						http://www.springframework.org/schema/tx 
+        				http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+        				http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<bean id="bitbucketInfo" class="org.sheger.kebena.repo.Infoimpl.Info"
+		scope="prototype">
+		<property name="username" value="${username.bitbucket}"></property>
+		<property name="password" value="${password.bitbucket}"></property>
+		<property name="url" value="${url.bitbucket}"></property>
+		<property name="remote" value="${remote.bitbucket}"></property>
+	</bean>
+
+	<bean id="gitblitInfo" class="org.sheger.kebena.repo.Infoimpl.Info"
+		scope="prototype">
+		<property name="username" value="${username.gitblit}"></property>
+		<property name="password" value="${password.gitblit}"></property>
+		<property name="url" value="${url.gitblit}"></property>
+		<property name="remote" value="${remote.gitblit}"></property>
+	</bean>
+
+	<util:list id="remotes">
+		<value>bitbucketInfo</value> 
+		<value>gitblitInfo</value>
+	</util:list>
+
+
+	<util:list id="gitblitBareHomeDir">
+		<value>/home/tomcat/webapps/gitblit/WEB-INF/data/git/</value>		
+	</util:list>
+
+</beans>

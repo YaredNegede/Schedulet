@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+						http://www.springframework.org/schema/util 
+						http://www.springframework.org/schema/util/spring-util-4.2.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+						http://www.springframework.org/schema/tx 
+        				http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+        				http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<import resource="repositories.xml" />
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>Config.properties</value>
+		</property>
+		<property name="nullValue" value="@null" />
+	</bean>
+
+	<bean id="properties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="Config.properties" />
+	</bean>
+
+	<bean id="job"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+		depends-on="synch">
+		<property name="targetObject" ref="synch" />
+		<property name="targetMethod" value="Execute" />
+	</bean>
+
+	<bean id="simpleTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="job" />
+		<property name="startDelay" value="1000" />
+		<property name="repeatInterval" value="2000" />
+	</bean>
+
+	<bean id="jobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="job" />
+		<property name="cronExpression" value="0 0/1 0-23 * * ?" />
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!-- <ref bean="jobTrigger" /> -->
+				<!-- <ref bean="simpleTrigger"/> -->
+				<ref bean="jobTrigger" />
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="bitbucketCreater"
+		class="org.sheger.kebena.synchronizationImpl.CreaterOnBitBucket">
+		<!-- <property name="bitbucketCreateURL" value="${url.create.bitbucket}"></property> -->
+
+	</bean>
+
+	<bean id="gitblitCreater" class="org.sheger.kebena.synchronizationImpl.CreateOnGitblit">
+		<!-- <property name="bitbucketCreateURL" value="${url.create.bitbucket}"></property> -->
+	</bean>
+
+	<bean id="puller" class="org.sheger.kebena.synchronizationImpl.Puller">
+
+	</bean>
+
+	<bean id="pusher" class="org.sheger.kebena.synchronizationImpl.Pusher">
+
+	</bean>
+
+	<bean id="initializer" class="org.sheger.kebena.reposImpl.Initialize">
+	 	<property name="homeDir" value="${homeDir}"></property>
+	 	<property name="pathStrPath" value="${pathStrPath}"></property> 
+	</bean>
+
+	<bean id="synch" class="org.sheger.kebena.Executer" init-method="Init">
+		<property name="initializer" ref="initializer"></property>
+	</bean>
+
+	<util:list id="allTasks">
+		<value>puller</value>
+		<value>pusher</value>
+		<value>gitblitCreater</value>
+		<value>bitbucketCreater</value>
+	</util:list>
+
+</beans>

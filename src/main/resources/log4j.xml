@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<param name="Threshold" value="DEBUG" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-4r [%t] %-5p %c %x - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="FA1" class="org.apache.log4j.FileAppender">
+		<param name="File" value="target/dikkimo.log" />
+		<param name="Threshold" value="DEBUG" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-4r [%t] %-5p %c %x - %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="org.apache.commons.digester">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="org.quartz">
+		<level value="ERROR" />
+	</logger>
+	
+	<logger name="org.eclipse.jgit">
+		<level value="DEBUG" />
+	</logger>
+	
+	<logger name="org.sheger">
+		<level value="TRACE" />
+	</logger>
+
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="ConsoleAppender" />
+		<appender-ref ref="FA1" />
+	</root>
+</log4j:configuration>
+
