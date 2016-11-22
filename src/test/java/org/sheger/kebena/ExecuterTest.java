@@ -132,8 +132,8 @@ public class ExecuterTest {
 			final List<Info> infos = new ArrayList<>();
 
 			final Info gitblit = new Info();
-			gitblit.setUrl("http://yared.negede@gitblit.dventus.com/r/Projects/server/");
-			gitblit.setPassword("s3cret");
+			gitblit.setUrl("url");
+			gitblit.setPassword("pwd");
 			gitblit.setRemote("gitblit");
 			gitblit.setUsername("yared.negede");
 			gitblit.setRepoName("Server");
@@ -142,10 +142,10 @@ public class ExecuterTest {
 			gitblit.setStatus(status);
 
 			final Info bucketinfo = new Info();
-			bucketinfo.setUrl("https://grumDventus@bitbucket.org/grumDventus/");
-			bucketinfo.setPassword("dventus01");
+			bucketinfo.setUrl("url");
+			bucketinfo.setPassword("pwd");
 			bucketinfo.setRemote("bitbucket");
-			bucketinfo.setUsername("grumDventus");
+			bucketinfo.setUsername("usn");
 			bucketinfo.setRepoName("Server");
 			bucketinfo.setStatus(status);
 			infos.add(gitblit);

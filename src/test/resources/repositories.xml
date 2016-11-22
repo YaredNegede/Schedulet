@@ -37,7 +37,7 @@
 
 
 	<util:list id="gitblitBareHomeDir">
-		<value>/home/tomcat/webapps/gitblit/WEB-INF/data/git/</value>		
+		<value>/home/data/git/</value>		
 	</util:list>
 
 </beans>
